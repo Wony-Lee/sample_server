@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { BoardService } from './board.service';
 
 @Controller('board')
@@ -10,8 +10,9 @@ export class BoardController {
     return this.boardService.getFullDate();
   }
 
-  @Post()
-  async createBoard(@Body() body) {
-    return this.boardService.createBoard(body);
+  // param
+  @Post(':id')
+  async createBoard(@Body() body, @Param() param) {
+    return this.boardService.createBoard(body, param);
   }
 }

@@ -9,11 +9,11 @@ export class BoardService {
     const day = date.getDate();
     return `${year}-${month}-${day}`;
   }
-  createBoard(body): any {
+  createBoard(body, param): any {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    console.log(body, `date : ${year} ${month} ${day}`);
+    console.log(body, param, `date : ${year} ${month} ${day}`);
   }
 }
