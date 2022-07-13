@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { MoviesController } from './movies/movies.controller';
+import { MoviesService } from './movies/movies.service';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -35,7 +37,7 @@ const typeOrmModuleOptions = {
     }),
     BoardModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, MoviesController],
+  providers: [AppService, MoviesService],
 })
 export class AppModule {}
