@@ -8,6 +8,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { MoviesController } from './movies/movies.controller';
 import { MoviesService } from './movies/movies.service';
+import { MoviesModule } from './movies/movies.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -36,8 +37,9 @@ const typeOrmModuleOptions = {
       validationSchema: Joi.object({}),
     }),
     BoardModule,
+    MoviesModule,
   ],
-  controllers: [AppController, MoviesController],
-  providers: [AppService, MoviesService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
