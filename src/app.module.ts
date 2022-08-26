@@ -1,45 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { BoardModule } from './board/board.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as Joi from 'joi';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { MoviesModule } from './movies/movies.module';
-import { UserModule } from './users/user.module';
-
-const typeOrmModuleOptions = {
-  useFactory: async (
-    configService: ConfigService,
-  ): Promise<TypeOrmModuleOptions> => ({
-    namingStrategy: new SnakeNamingStrategy(),
-    type: 'mysql',
-    host: configService.get('DB_HOST'),
-    port: configService.get('DB_PORT'),
-    username: configService.get('DB_USERNAME'),
-    password: configService.get('DB_PASSWORD'),
-    database: configService.get('DB_DATABASE'),
-    // entities:[],
-    synchronize: true,
-    timezone: 'local',
-    autoLoadEntities: true,
-    logging: true,
-    keepConnectionAlive: true,
-  }),
-};
+import { UsersController } from './users/users.controller';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      validationSchema: Joi.object({}),
-    }),
-    BoardModule,
-    MoviesModule,
-    UserModule,
-  ],
-  controllers: [AppController],
+  imports: [],
+  controllers: [AppController, UsersController],
   providers: [AppService],
 })
 export class AppModule {}
