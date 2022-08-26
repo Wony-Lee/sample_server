@@ -1,45 +1,23 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { BoardModule } from './board/board.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as Joi from 'joi';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { MoviesModule } from './movies/movies.module';
-import { UserModule } from './users/user.module';
-
-const typeOrmModuleOptions = {
-  useFactory: async (
-    configService: ConfigService,
-  ): Promise<TypeOrmModuleOptions> => ({
-    namingStrategy: new SnakeNamingStrategy(),
-    type: 'mysql',
-    host: configService.get('DB_HOST'),
-    port: configService.get('DB_PORT'),
-    username: configService.get('DB_USERNAME'),
-    password: configService.get('DB_PASSWORD'),
-    database: configService.get('DB_DATABASE'),
-    // entities:[],
-    synchronize: true,
-    timezone: 'local',
-    autoLoadEntities: true,
-    logging: true,
-    keepConnectionAlive: true,
-  }),
-};
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import * as mongoose from 'mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: Joi.object({}),
+      // validationSchema: Joi.object({}),
     }),
-    BoardModule,
-    MoviesModule,
-    UserModule,
+    MongooseModule.forRoot(process.env.MONGO_URI, {}),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure() {
+    const DEBUG = process.env.MODE === 'dev' ? true : false;
+    mongoose.set('debug', DEBUG);
+  }
+}
