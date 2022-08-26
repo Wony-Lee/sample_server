@@ -7,6 +7,7 @@ import * as Joi from 'joi';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { MoviesModule } from './movies/movies.module';
+import { UserModule } from './users/user.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -36,6 +37,7 @@ const typeOrmModuleOptions = {
     }),
     BoardModule,
     MoviesModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
